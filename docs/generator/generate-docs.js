@@ -274,6 +274,7 @@ function generateIndexPage(template, navigation, filesBySection) {
   return template
     .replace('{{PAGE_TITLE}}', 'Documentation')
     .replace('{{META_DESCRIPTION}}', 'Complete documentation')
+    .replace('{{PAGE_HEADER}}', '') // Index page doesn't need a header
     .replace('{{PAGE_CONTENT}}', indexContent)
     .replace('{{NAVIGATION}}', navigation)
     .replace('{{TOC_SECTION}}', '')
@@ -288,22 +289,23 @@ function generatePage(file, template, navigation) {
   const htmlContent = markdownToHtml(content);
   const tableOfContents = generateTableOfContents(htmlContent);
   
-  // Add page header with title and subtitle
+  // Generate page header separately
   let pageHeader = '';
   if (frontmatter.title) {
     pageHeader = `<div class="page-header">
-      <h1>${frontmatter.title}</h1>
-      ${frontmatter.subtitle ? `<p class="page-subtitle">${frontmatter.subtitle}</p>` : ''}
-      <a href="../${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+      <div class="container-medium">
+        <h1>${frontmatter.title}</h1>
+        ${frontmatter.subtitle ? `<p class="page-subtitle">${frontmatter.subtitle}</p>` : ''}
+        <a href="../${file.markdownPath}" class="button is-small is-faded page-source-link" target="_blank" rel="noopener noreferrer">View as Markdown</a>
+      </div>
     </div>`;
   }
-  
-  const fullContent = pageHeader + htmlContent;
   
   return template
     .replace('{{PAGE_TITLE}}', frontmatter.title || 'Untitled')
     .replace('{{META_DESCRIPTION}}', frontmatter.description || '')
-    .replace('{{PAGE_CONTENT}}', fullContent)
+    .replace('{{PAGE_HEADER}}', pageHeader)
+    .replace('{{PAGE_CONTENT}}', htmlContent)
     .replace('{{NAVIGATION}}', navigation)
     .replace('{{TOC_SECTION}}', `<aside class="docs-toc">
       <span class="toc-header">On this page</span>

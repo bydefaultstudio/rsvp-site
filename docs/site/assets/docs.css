@@ -203,15 +203,29 @@
 }
 
 .page-header {
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
+  width: 100%;
+  padding-top: var(--section-m);
+  padding-bottom: var(--section-m);
   border-bottom: var(--border-s) solid var(--border-secondary);
+  margin-bottom: var(--space-2xl);
+  /* background-color: var(--background-faded); */
+}
+
+.page-header .container-medium {
+  text-align: center;
+}
+
+.page-header h1 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: var(--space-m);
 }
 
 .page-subtitle {
   color: var(--text-secondary);
   font-size: var(--font-m);
   margin-bottom: var(--space-m);
+  text-align: center;
 }
 
 .page-source-link {
@@ -412,7 +426,7 @@
     display: block; /* Remove grid layout on mobile */
     padding-left: var(--space-l);
     padding-right: var(--space-l);
-    padding-top: var(--space-xl);
+    padding-top: 0; /* Remove top padding since header has section padding */
   }
 
   .docs-toc {
