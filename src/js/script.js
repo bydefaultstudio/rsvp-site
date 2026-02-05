@@ -2,11 +2,11 @@
  * Script Purpose: Custom scripts for Black Doctor RSVP Webflow project.
  * Author: By Default Studio
  * Created: 2025-02-03
- * Version: 1.0.0
+ * Version: 1.0.2
  * Last Updated: 2025-02-03
  */
 
-console.log("script.js v1.0.0");
+console.log("script.js v1.0.2");
 
 //
 //------- Invitee personalisation (?name query) -------//
@@ -70,14 +70,7 @@ function envelopeAnimation() {
     });
   }
 
-  // ---- 3. Invitation fades in ----
-  if (invitationWrapper) {
-    tl.to(invitationWrapper, {
-      opacity: 1,
-    });
-  }
-
-  // ---- 4. Lid opens (rotate 180° back); allow body scroll ----
+  // ---- 3. Lid opens (rotate 180° back); allow body scroll ----
   tl.add(() => {
     document.body.classList.remove("overflow-hidden");
   });
@@ -88,16 +81,27 @@ function envelopeAnimation() {
     ease: "power2.inOut"
   });
 
-  // ---- 5. Lid drops behind content ----
+  // ---- 4. Lid drops behind content ----
   tl.set(lid, { zIndex: -1 });
 
-  // ---- 6. Empty space shrinks (70vh → 10vh) ----
-  if (emptySpace) {
-    tl.to(emptySpace, {
-      height: "10vh",
+  // ---- 5. Invitation fades in + empty space shrinks (together) ----
+  if (invitationWrapper) {
+    tl.to(invitationWrapper, {
+      opacity: 1,
       duration: 1,
       ease: "sine.inOut"
     });
+  }
+  if (emptySpace) {
+    tl.to(
+      emptySpace,
+      {
+        height: "10vh",
+        duration: 1,
+        ease: "sine.inOut"
+      },
+      "<"
+    );
   }
 }
 
