@@ -59,7 +59,8 @@ function envelopeAnimation() {
   if (moveTarget) {
     const moveElement = envelopeWrapper || layers[0];
     const rect = moveElement.getBoundingClientRect();
-    const distanceToBottom = window.innerHeight - rect.bottom;
+    const offsetLower = 80; // Add pixels to move envelope lower (e.g. 80); use negative to keep it higher
+    const distanceToBottom = window.innerHeight - rect.bottom + offsetLower;
 
     tl.to(moveTarget, {
       y: distanceToBottom,
